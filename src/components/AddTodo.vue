@@ -25,7 +25,6 @@ export default {
     methods: {
         addTodo: function() {
             const data = {
-                id: "7",
                 title: this.addTitle,
                 content: this.addContent,
             };
