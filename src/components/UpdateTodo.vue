@@ -51,10 +51,8 @@ export default {
     updateTodo: function() {
       const data = {
         id: this.id,
-        updateObj: {
-          title: this.updateTitle,
-          content: this.updateContent,
-        },
+        title: this.updateTitle,
+        content: this.updateContent,
       };
       this.$axios
         .post("/api/todo/update", data)

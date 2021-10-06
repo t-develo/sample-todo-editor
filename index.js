@@ -32,7 +32,7 @@ app.post("/api/todo/add", (req, res) => {
 });
 
 app.post("/api/todo/update", (req, res) => {
-    updateTodo(req.body.id, req.body.updateObj);
+    updateTodo(req.body);
     res.json({ message: "success" });
 });
 
@@ -52,9 +52,9 @@ function addTodo(todo) {
 }
 
 // todo更新API
-function updateTodo(id, todoObj) {
+function updateTodo(todoObj) {
     todoList.forEach((todo) => {
-        if (todo.id === id) {
+        if (todo.id === todoObj.id) {
             todo.title = todoObj.title;
             todo.content = todoObj.content;
         }
