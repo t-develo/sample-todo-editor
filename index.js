@@ -1,6 +1,7 @@
 require('dotenv').config();
 const express = require("express");
 const app = express();
+const port = process.env.PORT || 3000;
 app.use(
     express.urlencoded({
         extended: true,
@@ -9,18 +10,19 @@ app.use(
 app.use(express.json());
 
 const { createCosmosDbClient, insertData, selectAll, updateItem, deleteItem } = require('./cosmos/CosmosRepository');
+const staticdir = process.env.STATIC_DIR || __dirname;
 
 // リクエストのルーティング
-app.use("/img", express.static(__dirname + "/dist/img/"));
-app.use("/css", express.static(__dirname + "/dist/css/"));
-app.use("/js", express.static(__dirname + "/dist/js/"));
-app.use("/fonts", express.static(__dirname + "/dist/fonts/"));
-app.use("/favicon.ico", express.static(__dirname + "/dist/favicon.ico"));
-app.get("/", (req, res) => res.sendFile(__dirname + "/dist/index.html"));
+app.use("/img", express.static(staticdir + "/dist/img/"));
+app.use("/css", express.static(staticdir + "/dist/css/"));
+app.use("/js", express.static(staticdir + "/dist/js/"));
+app.use("/fonts", express.static(staticdir + "/dist/fonts/"));
+app.use("/favicon.ico", express.static(staticdir + "/dist/favicon.ico"));
+app.get("/", (req, res) => res.sendFile(staticdir + "/dist/index.html"));
 
 let cosmosClient = null;
 // サーバープロセスの実行
-app.listen(3000, async () => {
+app.listen(port, async () => {
     cosmosClient = await createCosmosDbClient();
     console.log("Server process is running.");
 });
